@@ -12,6 +12,9 @@ w.create_line(0, 100, 200, 0, fill='red', dash=(4,4))
 
 w.create_rectangle(50, 25, 150, 75, fill='blue')
 
+mainloop()
+
+
 '''
 Tkinter Canvas Guide:
 http://effbot.org/tkinterbook/canvas.htm
@@ -46,4 +49,3 @@ You can also write your own item types in C or C++ and plug them into Tkinter vi
 '''
 
 
-mainloop()
