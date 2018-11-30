@@ -5,38 +5,83 @@ Created Fall 2018
 '''
 
 from tkinter import *
+from tile import *
 
 class GUI:
 
     def __init__(self, window):
         '''Constructor for GUI class'''
 
-        BOARD_WIDTH = 1000
-        BOARD_HEIGHT = 1000
+        # Set the board width and height variables
+        BOARD_WIDTH = 400
+        BOARD_HEIGHT = 400
 
+        # Set the header width and height variables
         HEADER_WIDTH = BOARD_WIDTH
-        HEADER_WIDTH = BOARD_HEIGHT/2
+        HEADER_HEIGHT = BOARD_HEIGHT/2
 
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
+
+        # Create the header
+        header = Frame(self._window, bg='#FFFFFF', width=HEADER_WIDTH, height=HEADER_HEIGHT)
+        header.grid(row=0, column=0, sticky=W+E)
+
+        # Create the title object for the header
+        title = Label(header, text='2048', font=('Roboto', 36), bg='#FFFFFF')
+        title.grid(row=0, column=0, sticky=NW)
+
+        # Create the new game button for the header
+        new_game = Button(header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
+        new_game.grid(row=1, column=0, sticky=NW)
+
+        # Create the board
+        board = Canvas(self._window, bg='#BBBBBB', width=BOARD_WIDTH, height=BOARD_HEIGHT)
+        board.grid(row=1, column=0)
+
+        BOARD_LINE_COLOR = '#222222'
+
+        # Create vertical board lines
+        board.create_line(2, 0, 2, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        board.create_line(BOARD_HEIGHT, 0, BOARD_HEIGHT, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        board.create_line(100, 0, 100, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        board.create_line(200, 0, 200, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        board.create_line(300, 0, 300, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+
+        # Create horizontal board lines
+        board.create_line(0, 2, BOARD_WIDTH, 2, fill=BOARD_LINE_COLOR)
+        board.create_line(0, BOARD_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        board.create_line(0, 100, BOARD_WIDTH, 100, fill=BOARD_LINE_COLOR)
+        board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
+        board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
 
         if event.keysym == 'Right' or event.keysym == 'd':
-            pass
+            print('right')
             # self.move_tiles('right')
+            # spawn_tiles()
         if event.keysym == 'Left' or event.keysym == 'a':
-            pass
+            print('left')
             # self.move_tiles('left')
+            # spawn_tiles()
         if event.keysym == 'Up' or event.keysym == 'w':
-            pass
+            print('up')
             # self.move_tiles('up')
+            # spawn_tiles()
         if event.keysym == 'Down' or event.keysym == 's':
-            pass
+            print('down')
             # self.move_tiles('down')
+            # spawn_tiles()
 
+    def spawn_tiles(self):
+        # FIXME: This method should spawn in tiles every time the user moves
+        pass
 
+    def new_game(self):
+        # FIXME: Command for new game button
+        print('New Game')
 
 
 if __name__ == '__main__':
