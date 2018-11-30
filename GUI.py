@@ -55,6 +55,8 @@ class GUI:
         board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
+        # FIXME: Drawing tiles...
+
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
 
@@ -74,10 +76,6 @@ class GUI:
             print('down')
             # self.move_tiles('down')
             # spawn_tiles()
-
-    def spawn_tiles(self):
-        # FIXME: This method should spawn in tiles every time the user moves
-        pass
 
     def new_game(self):
         # FIXME: Command for new game button
