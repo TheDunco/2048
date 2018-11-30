@@ -36,7 +36,7 @@ class GUI:
         new_game.grid(row=1, column=0, sticky=NW)
 
         # Create the board
-        board = Canvas(self._window, bg='#BBBBBB', width=BOARD_WIDTH, height=BOARD_HEIGHT)
+        board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
         board.grid(row=1, column=0)
 
         BOARD_LINE_COLOR = '#222222'
@@ -55,7 +55,14 @@ class GUI:
         board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
-        # FIXME: Drawing tiles...
+        # FIXME: This
+        self._board_tile_coords = [
+            [(0,0), (100,100)], [(100,0), (200,100)], [(200,0), (300,100)], [(300,0),(400,100)],
+            [(0,100), (100,200)], [(100,100),()], [(200,),()], [(300,),(400,)]
+            [(0,200),()], [(100,300), ()], [(200,), ()], [(300,), (400,)]
+            [(0,300), ()], [(100,400), ()], [(200,), ()], [(300,), (400,)]
+        ]
+
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
@@ -80,6 +87,9 @@ class GUI:
     def new_game(self):
         # FIXME: Command for new game button
         print('New Game')
+
+    def draw_tiles(self):
+        for tiles in
 
 
 if __name__ == '__main__':

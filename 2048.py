@@ -17,7 +17,7 @@ class Twenty48:
                                 False, False, False, False,
                                 False, False, False, False,
                                 False, False, False, False]
-        self._active_tilse = []
+        self._active_tiles = []
 
         root = Tk()
         root.title('2048')
