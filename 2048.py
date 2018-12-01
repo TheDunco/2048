@@ -39,6 +39,10 @@ class Twenty48:
             for tile in self._occupied_tiles:
                 pass
 
+    def draw_tiles(self):
+        '''Render the tiles'''
+        for tile in self._active_tiles = []:
+            pass
 
 if __name__ == '__main__':
     game = Twenty48()
