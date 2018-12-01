@@ -55,7 +55,6 @@ class GUI:
         board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
-        # FIXME: This
         self._board_tile_coords = [
             [(0,0), (100,100)], [(100,0), (200,100)], [(200,0), (300,100)], [(300,0),(400,100)],
             [(0,100), (100,200)], [(100,100),(200,200)], [(200,100),(300,200)], [(300,100),(400,200)]
