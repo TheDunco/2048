@@ -6,6 +6,7 @@ Created Fall 2018
 
 from tkinter import *
 from tile import *
+from game import Twenty48
 
 class GUI:
 
@@ -36,31 +37,39 @@ class GUI:
         new_game.grid(row=1, column=0, sticky=NW)
 
         # Create the board
-        board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
-        board.grid(row=1, column=0)
+        self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
+        self._board.grid(row=1, column=0)
 
         BOARD_LINE_COLOR = '#222222'
 
+        # FIXME: Put in for loops
         # Create vertical board lines
-        board.create_line(2, 0, 2, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
-        board.create_line(BOARD_HEIGHT, 0, BOARD_HEIGHT, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
-        board.create_line(100, 0, 100, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
-        board.create_line(200, 0, 200, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
-        board.create_line(300, 0, 300, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(2, 0, 2, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(BOARD_HEIGHT, 0, BOARD_HEIGHT, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(100, 0, 100, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(200, 0, 200, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(300, 0, 300, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
 
         # Create horizontal board lines
-        board.create_line(0, 2, BOARD_WIDTH, 2, fill=BOARD_LINE_COLOR)
-        board.create_line(0, BOARD_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
-        board.create_line(0, 100, BOARD_WIDTH, 100, fill=BOARD_LINE_COLOR)
-        board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
-        board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
+        self._board.create_line(0, 2, BOARD_WIDTH, 2, fill=BOARD_LINE_COLOR)
+        self._board.create_line(0, BOARD_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, fill=BOARD_LINE_COLOR)
+        self._board.create_line(0, 100, BOARD_WIDTH, 100, fill=BOARD_LINE_COLOR)
+        self._board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
+        self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
         self._board_tile_coords = [
-            [(0,0), (100,100)], [(100,0), (200,100)], [(200,0), (300,100)], [(300,0),(400,100)],
-            [(0,100), (100,200)], [(100,100),(200,200)], [(200,100),(300,200)], [(300,100),(400,200)]
-            [(0,200),(100,300)], [(100,200), (200,300)], [(200,200), (300,300)], [(300,200), (400,300)]
+            [(0,0), (100,100)], [(100,0), (200,100)], [(200,0), (300, 100)], [(300,0), (400,100)],
+            [(0,100), (100,200)], [(100,100), (200,200)], [(200,100), (300,200)], [(300,100), (400,200)],
+            [(0,200), (100,300)], [(100,200), (200,300)], [(200,200), (300,300)], [(300,200), (400,300)],
             [(0,300), (100,400)], [(100,300), (200,400)], [(200,300), (300,400)], [(300,300), (400,400)]
         ]
+
+        test_tile = Tile(2048)
+        print(test_tile.get_color())
+        print(test_tile.get_value())
+        test_tile.set_color()
+        print(test_tile.get_color())
+        test_tile.render_tile(self._board)
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
@@ -86,9 +95,13 @@ class GUI:
         # FIXME: Command for new game button
         print('New Game')
 
+    def get_board(self):
+        return self._board
+
 
 if __name__ == '__main__':
     root = Tk()
     root.title('2048')
     app = GUI(root)
     root.mainloop()
+

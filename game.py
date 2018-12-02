@@ -4,25 +4,21 @@ Created Fall 2018
 @author: Duncan Van Keulen
 '''
 
-from GUI import *
 from tile import *
-from tkinter import *
 from random import randint
 
 
 class Twenty48:
 
     def __init__(self):
+
+        self._score = 0
         self._occupied_tiles = [False, False, False, False,
                                 False, False, False, False,
                                 False, False, False, False,
                                 False, False, False, False]
-        self._active_tiles = []
 
-        root = Tk()
-        root.title('2048')
-        app = GUI(root)
-        root.mainloop()
+        self._active_tiles = []
 
     def spawn_tiles(self):
         '''Spawns tiles with values 2 or 3'''
@@ -41,10 +37,18 @@ class Twenty48:
 
     def draw_tiles(self):
         '''Render the tiles'''
-        for tile in self._active_tiles = []:
-            pass
+        for tile in self._active_tiles:
+            tile.render(board)
+
+    def game_over(self):
+        '''Returns boolean of the game-over state'''
+        for element in self._occupied_tiles:
+            if not element:
+                return False
+
 
 if __name__ == '__main__':
     game = Twenty48()
+
 
 
