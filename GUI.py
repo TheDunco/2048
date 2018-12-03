@@ -5,24 +5,31 @@ Created Fall 2018
 '''
 
 from tkinter import *
+from coords import *
 from tile import *
-from game import Twenty48
+from game import *
+
+# Set the board width and height variables
+BOARD_WIDTH = 400
+BOARD_HEIGHT = 400
+
+BOARD_LINE_COLOR = '#222222'
+
+# Set the header width and height variables
+HEADER_WIDTH = 400
+HEADER_HEIGHT = 200
+
 
 class GUI:
 
     def __init__(self, window):
         '''Constructor for GUI class'''
 
-        # Set the board width and height variables
-        BOARD_WIDTH = 400
-        BOARD_HEIGHT = 400
-
-        # Set the header width and height variables
-        HEADER_WIDTH = BOARD_WIDTH
-        HEADER_HEIGHT = BOARD_HEIGHT/2
-
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
+
+        # Create the board canvas
+        self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
 
         # Create the header
         header = Frame(self._window, bg='#FFFFFF', width=HEADER_WIDTH, height=HEADER_HEIGHT)
@@ -36,11 +43,28 @@ class GUI:
         new_game = Button(header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
         new_game.grid(row=1, column=0, sticky=NW)
 
-        # Create the board
-        self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
-        self._board.grid(row=1, column=0)
+        self.draw_board()
 
-        BOARD_LINE_COLOR = '#222222'
+        game = Twenty48()
+        game.spawn_tiles()
+        for tile in game.get_tiles_list():
+            tile.render_tile(self._board)
+
+        # Early test code
+        # test_tile = Tile(2048)
+        # print(test_tile.get_color())
+        # print(test_tile.get_value())
+        # test_tile.set_color()
+        # print(test_tile.get_color())
+        # test_tile.render_tile(self._board)
+        # test_tile.set_position_coords(SPACE1)
+        # self._board.delete(ALL)
+        # self.draw_board()
+        # test_tile.render_tile(self._board)
+
+    def draw_board(self):
+
+        self._board.grid(row=1, column=0)
 
         # FIXME: Put in for loops
         # Create vertical board lines
@@ -56,20 +80,6 @@ class GUI:
         self._board.create_line(0, 100, BOARD_WIDTH, 100, fill=BOARD_LINE_COLOR)
         self._board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
-
-        self._board_tile_coords = [
-            [(0,0), (100,100)], [(100,0), (200,100)], [(200,0), (300, 100)], [(300,0), (400,100)],
-            [(0,100), (100,200)], [(100,100), (200,200)], [(200,100), (300,200)], [(300,100), (400,200)],
-            [(0,200), (100,300)], [(100,200), (200,300)], [(200,200), (300,300)], [(300,200), (400,300)],
-            [(0,300), (100,400)], [(100,300), (200,400)], [(200,300), (300,400)], [(300,300), (400,400)]
-        ]
-
-        test_tile = Tile(2048)
-        print(test_tile.get_color())
-        print(test_tile.get_value())
-        test_tile.set_color()
-        print(test_tile.get_color())
-        test_tile.render_tile(self._board)
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''

@@ -4,8 +4,9 @@ Created Fall 2018
 @author: Duncan Van Keulen
 '''
 
-import random
-from GUI import *
+# from GUI import *
+from coords import *
+
 
 class Tile:
     '''Tile class for 2048 game'''
@@ -15,12 +16,12 @@ class Tile:
         self._color = '#BBBBBB'
         # FIXME: Make accessors/mutators for these variables
         self._x1 = 0
-        self._y1 = 100
-        self._x2 = 0
+        self._y1 = 0
+        self._x2 = 100
         self._y2 = 100
         self._center_x = 50
         self._center_y = 50
-        self._occupied_tile = 0
+        self._occupied_tile_id = 0
 
     def render_tile(self, board):
         '''Renders tile to canvas'''
@@ -32,35 +33,26 @@ class Tile:
         board.create_text((self._center_x, self._center_y), text=str(self._value), font=('Roboto', 12))
 
     # Accessor functions
-    def get_x(self):
-        '''Accessor for x variable'''
-        return self._x
-
-    def get_y(self):
-        '''Accessor for y variable'''
-        return self._y
-
     def get_value(self):
         '''Accessor for value variable'''
         return self._value
 
+    def get_color(self):
+        '''Accessor for the color variable'''
+        return self._color
+
     # Mutator functions
-    def set_x(self, new_x):
-        '''Mutator for x variable'''
-        # FIXME: Make this animate
-        self._x = new_x
-
-    def set_y(self, new_y):
-        '''Mutator for y variable'''
-        # FIXME: Make this animate
-        self._x = new_y
-
     def set_value(self, new_value):
         '''Mutator for value variable'''
         self._value = new_value
 
-    def get_color(self):
-        return self._color
+    def set_position_coords(self, space):
+        self._x1 = space['x1']
+        self._y1 = space['y1']
+        self._x2 = space['x2']
+        self._center_x = space['cx']
+        self._center_y = space['cy']
+        self._occupied_tile_id = space['id']
 
     def set_color(self):
         '''Sets the color according go the value of tile
@@ -77,7 +69,7 @@ class Tile:
         elif self._value == 32:
             self._color = '#03A9F4'
         elif self._value == 64:
-            self._color = '#FFF9800'
+            self._color = '#FFF980'
         elif self._value == 128:
             self._color = '#E91E63'
         elif self._value == 256:

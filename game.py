@@ -1,4 +1,4 @@
-'''2048 Game
+'''2048 Game Class
 CS108 Final Project
 Created Fall 2018
 @author: Duncan Van Keulen
@@ -6,6 +6,7 @@ Created Fall 2018
 
 from tile import *
 from random import randint
+from GUI import *
 
 
 class Twenty48:
@@ -28,7 +29,10 @@ class Twenty48:
         value = spawn_values[choose_random]
         for i in range(2):
             tile = Tile(value)
-            self.active_tiles.append(tile)
+            self._active_tiles.append(tile)
+
+    def get_tiles_list(self):
+        return self._active_tiles
 
     def move_tiles(self, direction):
         if direction == 'up':
@@ -38,7 +42,7 @@ class Twenty48:
     def draw_tiles(self):
         '''Render the tiles'''
         for tile in self._active_tiles:
-            tile.render(board)
+            tile.render(self._board)
 
     def game_over(self):
         '''Returns boolean of the game-over state'''
