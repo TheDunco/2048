@@ -46,9 +46,13 @@ class GUI:
         self.draw_board()
 
         game = Twenty48()
-        game.spawn_tiles()
+        game.spawn_tile()
         for tile in game.get_tiles_list():
+            tile.set_color()
+            self._board.delete(ALL)
+            self.draw_board()
             tile.render_tile(self._board)
+
 
         # Early test code
         # test_tile = Tile(2048)

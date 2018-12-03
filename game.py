@@ -7,6 +7,7 @@ Created Fall 2018
 from tile import *
 from random import randint
 from GUI import *
+from coords import *
 
 
 class Twenty48:
@@ -21,15 +22,21 @@ class Twenty48:
 
         self._active_tiles = []
 
-    def spawn_tiles(self):
+    def spawn_tile(self):
         '''Spawns tiles with values 2 or 3'''
 
-        spawn_values = [2,4]
-        choose_random = randint(0,1)
-        value = spawn_values[choose_random]
-        for i in range(2):
-            tile = Tile(value)
-            self._active_tiles.append(tile)
+        rand_percent = randint(0,10)
+        if rand_percent == 0 or rand_percent == 1:
+            value = 4
+        else:
+            value = 2
+
+        tile = Tile(value)
+        # tile.set_position_coords(SPACES[randint(0, 15)])
+        tile.set_position_coords(SPACE15)
+        # FIXME: Problems with SPACE0, 4, 5, 6, 7 | 8, 9, 10, 11, 12, 13, 14, 15
+        tile.set_color()
+        self._active_tiles.append(tile)
 
     def get_tiles_list(self):
         return self._active_tiles
