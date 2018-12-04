@@ -25,6 +25,8 @@ class GUI:
     def __init__(self, window):
         '''Constructor for GUI class'''
 
+        self._terminated = False
+
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
 
@@ -45,14 +47,9 @@ class GUI:
 
         self.draw_board()
 
-        game = Twenty48()
-        game.spawn_tile()
-        for tile in game.get_tiles_list():
-            tile.set_color()
-            self._board.delete(ALL)
-            self.draw_board()
-            tile.render_tile(self._board)
+        self._game = Twenty48()
 
+        self.go()
 
         # Early test code
         # test_tile = Tile(2048)
@@ -65,6 +62,18 @@ class GUI:
         # self._board.delete(ALL)
         # self.draw_board()
         # test_tile.render_tile(self._board)
+
+    def go(self):
+        while not self._terminated:
+            self._game.spawn_tile()
+            for tile in self._game.get_tiles_list():
+                tile.set_color()
+                self._board.delete(ALL)
+                self.draw_board()
+                tile.render_tile(self._board)
+            self._board.after(10)
+            self._board.update()
+            break
 
     def draw_board(self):
 
@@ -91,23 +100,25 @@ class GUI:
         if event.keysym == 'Right' or event.keysym == 'd':
             print('right')
             # self.move_tiles('right')
-            # spawn_tiles()
+
         if event.keysym == 'Left' or event.keysym == 'a':
             print('left')
             # self.move_tiles('left')
-            # spawn_tiles()
+
         if event.keysym == 'Up' or event.keysym == 'w':
             print('up')
             # self.move_tiles('up')
-            # spawn_tiles()
+
         if event.keysym == 'Down' or event.keysym == 's':
             print('down')
             # self.move_tiles('down')
-            # spawn_tiles()
 
     def new_game(self):
         # FIXME: Command for new game button
-        print('New Game')
+        self._game.spawn_tile()
+        self._board.after(10)
+        self._board.update()
+        self.go()
 
     def get_board(self):
         return self._board

@@ -4,6 +4,7 @@ Created Fall 2018
 @author: Duncan Van Keulen
 '''
 
+
 class Coords:
     def __init__(self):
         self._BOARD_SPACE_COORDS = [
@@ -113,7 +114,7 @@ class Coords:
         }
 
         self._SPACE13 = {
-            'x1': 100, 'y1': 100,
+            'x1': 100, 'y1': 300,
             'x2': 200, 'y2': 400,
             'cx': 150, 'cy': 350,
             'id': 13, 'oc': False
@@ -134,9 +135,9 @@ class Coords:
         }
 
         self._SPACES = [self._SPACE0, self._SPACE1, self._SPACE2, self._SPACE3,
-                  self._SPACE4, self._SPACE5, self._SPACE6, self._SPACE7,
-                  self._SPACE8, self._SPACE9, self._SPACE10, self._SPACE11,
-                  self._SPACE12, self._SPACE13, self._SPACE14, self._SPACE15]
+                        self._SPACE4, self._SPACE5, self._SPACE6, self._SPACE7,
+                        self._SPACE8, self._SPACE9, self._SPACE10, self._SPACE11,
+                        self._SPACE12, self._SPACE13, self._SPACE14, self._SPACE15]
 
         self._ROW0 = [self._SPACE0, self._SPACE1, self._SPACE2, self._SPACE3]
         self._ROW1 = [self._SPACE4, self._SPACE5, self._SPACE6, self._SPACE7]
@@ -150,15 +151,15 @@ class Coords:
 
     def get_space(self, space_number):
         '''Dynamically return the number of the space'''
-        command = 'return SPACE{}'.format(space_number)
-        exec(command)
+
+        return self._SPACES[space_number]
 
     def get_row(self, row_number):
         '''Dynamically return the number of the row'''
-        command = 'return SPACE{}'.format(row_number)
-        exec(command)
+
+        return self._SPACES[row_number]
 
     def get_column(self, column_number):
         '''Dynamically return the number of the column'''
-        command = 'return SPACE{}'.format(column_number)
-        exec(command)
+
+        return self._SPACES[column_number]

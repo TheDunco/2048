@@ -9,6 +9,9 @@ from random import randint
 from GUI import *
 from coords import *
 
+# FIXME: Add safe exit method
+# FIXME: Color does not change in space 0
+
 
 class Twenty48:
 
@@ -22,6 +25,8 @@ class Twenty48:
 
         self._active_tiles = []
 
+        self._coords = Coords()
+
     def spawn_tile(self):
         '''Spawns tiles with values 2 or 3'''
 
@@ -32,9 +37,9 @@ class Twenty48:
             value = 2
 
         tile = Tile(value)
-        # tile.set_position_coords(SPACES[randint(0, 15)])
-        tile.set_position_coords(SPACE15)
-        # FIXME: Problems with SPACE0, 4, 5, 6, 7 | 8, 9, 10, 11, 12, 13, 14, 15
+        # tile.set_position_coords(self._coords.get_space(randint(0, 15)))
+        # FIXME: Color does not change when space = 0
+        tile.set_position_coords(self._coords.get_space(0))
         tile.set_color()
         self._active_tiles.append(tile)
 
