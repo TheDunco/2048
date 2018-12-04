@@ -37,9 +37,9 @@ class Twenty48:
             value = 2
 
         tile = Tile(value)
-        # tile.set_position_coords(self._coords.get_space(randint(0, 15)))
+        tile.set_position_coords(self._coords.get_space(randint(0, 15)))
         # FIXME: Color does not change when space = 0
-        tile.set_position_coords(self._coords.get_space(0))
+        # tile.set_position_coords(self._coords.get_space(0))
         tile.set_color()
         self._active_tiles.append(tile)
 

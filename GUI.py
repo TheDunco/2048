@@ -71,6 +71,7 @@ class GUI:
                 self._board.delete(ALL)
                 self.draw_board()
                 tile.render_tile(self._board)
+                tile.render_tile(self._board)
             self._board.after(10)
             self._board.update()
             break
