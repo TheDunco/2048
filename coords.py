@@ -1,4 +1,4 @@
-'''Constants for all of the board space coordinates for 2048 game
+'''Constants class for all of the board space coordinates for 2048 game
 CS108 Final Project
 Created Fall 2018
 @author: Duncan Van Keulen
@@ -144,22 +144,44 @@ class Coords:
         self._ROW2 = [self._SPACE8, self._SPACE9, self._SPACE10, self._SPACE11]
         self._ROW3 = [self._SPACE12, self._SPACE13, self._SPACE14, self._SPACE15]
 
+        self._ROWS = [self._ROW0, self._ROW1, self._ROW2, self._ROW3]
+
         self._COLUMN0 = [self._SPACE0, self._SPACE4, self._SPACE8, self._SPACE12]
         self._COLUMN1 = [self._SPACE1, self._SPACE5, self._SPACE9, self._SPACE13]
         self._COLUMN2 = [self._SPACE2, self._SPACE6, self._SPACE10, self._SPACE14]
         self._COLUMN3 = [self._SPACE3, self._SPACE7, self._SPACE11, self._SPACE15]
 
+        self._COLUMNS = [self._COLUMN0, self._COLUMN1, self._COLUMN2, self._COLUMN3]
+
+    def switch_space_occupation(self, space_number=0, explicit=None):
+        '''Dynamically switch or set the occupation boolean of the space'''
+        if explicit != None:
+            command = "self._SPACE{}['id'] = not self._SPACE{}['id']".format(space_number)
+            exec(command)
+        else:
+            command = "self._SPACE{0}['id'] = {}".format(space_number, explicit)
+            exec(command)
+
     def get_space(self, space_number):
         '''Dynamically return the number of the space'''
-
         return self._SPACES[space_number]
 
     def get_row(self, row_number):
         '''Dynamically return the number of the row'''
-
         return self._SPACES[row_number]
 
     def get_column(self, column_number):
         '''Dynamically return the number of the column'''
-
         return self._SPACES[column_number]
+
+    def get_spaces(self):
+        '''Accessor for SPACES list'''
+        return self._SPACES
+
+    def get_rows(self):
+        '''Accessor for ROWS list'''
+        return self._ROWS
+
+    def get_columns(self):
+        '''Accessor for COLUMNS list'''
+        return self._COLUMNS

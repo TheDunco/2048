@@ -10,7 +10,6 @@ from GUI import *
 from coords import *
 
 # FIXME: Add safe exit method
-# FIXME: Color does not change in space 0
 
 
 class Twenty48:
@@ -18,14 +17,16 @@ class Twenty48:
     def __init__(self):
 
         self._score = 0
-        self._occupied_tiles = [False, False, False, False,
-                                False, False, False, False,
-                                False, False, False, False,
-                                False, False, False, False]
 
-        self._active_tiles = []
+        self.init_active_tiles_list()
 
         self._coords = Coords()
+
+    def init_active_tiles_list(self):
+        self._active_tiles = [Blank(), Blank(), Blank(), Blank(),
+                              Blank(), Blank(), Blank(), Blank(),
+                              Blank(), Blank(), Blank(), Blank(),
+                              Blank(), Blank(), Blank(), Blank()]
 
     def spawn_tile(self):
         '''Spawns tiles with values 2 or 4 respective to percentages'''
@@ -40,22 +41,28 @@ class Twenty48:
         tile = Tile(value)
         tile.set_position_coords(self._coords.get_space(randint(0, 15)))
         tile.set_color()
-        self._active_tiles.append(tile)
+        self._active_tiles[tile.get_occupied_space_id()] = tile
 
     def get_tiles_list(self):
+        '''Return the list of active tiles'''
         return self._active_tiles
 
     def move_tiles(self, direction):
         if direction == 'up':
-            for tile in self._occupied_tiles:
-                pass
+            pass
+        if direction == 'down':
+            pass
+        if direction == 'right':
+            pass
+        if direction == 'left':
+            pass
 
     def draw_tiles(self):
         '''Render the tiles'''
         for tile in self._active_tiles:
             tile.render(self._board)
 
-    def game_over(self):
+    def game_over_check(self):
         '''Returns boolean of the game-over state'''
         # FIXME: Create dynamic accessor and mutator for SPACE occupied 'oc' slice and use that...
         # FIXME: Will have to create an accessor for SPACES list

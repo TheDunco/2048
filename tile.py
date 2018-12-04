@@ -11,7 +11,7 @@ from coords import *
 class Tile:
     '''Tile class for 2048 game'''
 
-    def __init__(self, value=2):
+    def __init__(self, value=-1, space=0):
         '''Constructor for instance variables of tile'''
         self._value = value
         self._color = '#BBBBBB'
@@ -21,13 +21,13 @@ class Tile:
         self._y2 = 100
         self._center_x = 50
         self._center_y = 50
-        self._occupied_tile_id = 0
+        self._occupied_space_id = space
 
     def render_tile(self, board):
         '''Renders tile to canvas'''
-
-        board.create_rectangle(self._x1,self._y1, self._x2,self._y2, fill=self._color)
-        board.create_text((self._center_x, self._center_y), text=str(self._value), font=('Roboto', 12))
+        if self._value != -1:
+            board.create_rectangle(self._x1,self._y1, self._x2,self._y2, fill=self._color)
+            board.create_text((self._center_x, self._center_y), text=str(self._value), font=('Roboto', 12))
 
     # Accessor functions
     def get_value(self):
@@ -37,6 +37,10 @@ class Tile:
     def get_color(self):
         '''Accessor for the color variable'''
         return self._color
+
+    def get_occupied_space_id(self):
+        '''Accessor for the occupied space of the tile'''
+        return self._occupied_space_id
 
     # Mutator functions
     def set_value(self, new_value):
@@ -52,7 +56,7 @@ class Tile:
         self._y2 = space['y2']
         self._center_x = space['cx']
         self._center_y = space['cy']
-        self._occupied_tile_id = space['id']
+        self._occupied_space_id = space['id']
 
     def set_color(self):
         '''Sets the color according go the value of tile
@@ -71,6 +75,30 @@ class Tile:
             1024: '#7C4DFF',
             2048: '#D32F2F'
         }
+        if self._value != -1:
+            self._color = colors[self._value]
 
-        self._color = colors[self._value]
 
+class Blank:
+    def render_tile(self, board):
+        pass
+
+    # Accessor functions
+    def get_value(self):
+        pass
+
+    def get_color(self):
+        pass
+
+    def get_occupied_space_id(self):
+        pass
+
+    # Mutator functions
+    def set_value(self, new_value):
+        pass
+
+    def set_position_coords(self, space):
+        pass
+
+    def set_color(self):
+        pass

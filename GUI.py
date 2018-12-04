@@ -29,6 +29,7 @@ class GUI:
 
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
+        self._window.protocol('WM_DELETE_WINDOW', self.safe_exit)
 
         # Create the board canvas
         self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
@@ -66,13 +67,15 @@ class GUI:
     # FIXME: Change so this isn't a loop and is in the move function
     def go(self):
         while not self._terminated:
+            self._board.delete(ALL)
+            self._game.init_active_tiles_list()
             self._game.spawn_tile()
             for tile in self._game.get_tiles_list():
                 tile.set_color()
-                self._board.delete(ALL)
+                # self._board.delete(ALL)
                 self.draw_board()
                 tile.render_tile(self._board)
-                tile.render_tile(self._board)
+                self._board.update()
             self._board.after(10)
             self._board.update()
             break
@@ -101,22 +104,27 @@ class GUI:
 
         if event.keysym == 'Right' or event.keysym == 'd':
             print('right')
-            # self.move_tiles('right')
+            self._game.move_tiles('right')
 
         if event.keysym == 'Left' or event.keysym == 'a':
             print('left')
-            # self.move_tiles('left')
+            self._game.move_tiles('left')
 
         if event.keysym == 'Up' or event.keysym == 'w':
             print('up')
-            # self.move_tiles('up')
+            self._game.move_tiles('up')
 
         if event.keysym == 'Down' or event.keysym == 's':
             print('down')
-            # self.move_tiles('down')
+            self._game.move_tiles('down')
+
+    def safe_exit(self):
+        '''Turn off the event loop before closing the GUI'''
+
+        self._terminated = True
+        self._window.destroy()
 
     def new_game(self):
-        # FIXME: Command for new game button
         self._game.spawn_tile()
         self._board.after(10)
         self._board.update()
