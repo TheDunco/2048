@@ -59,8 +59,8 @@ class Tile:
         Colors from https://www.materialpalette.com/'''
 
         colors = {
-            2: '#FFFFFF',
-            4: '#BDBDBD',
+            2: '#FFE066',
+            4: '#FFFFFF',
             8: '#757575',
             16: '#FFCDD2',
             32: '#03A9F4',

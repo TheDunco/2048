@@ -49,7 +49,7 @@ class GUI:
 
         self._game = Twenty48()
 
-        self.go()
+        self.new_game()
 
         # Early test code
         # test_tile = Tile(2048)
@@ -63,6 +63,7 @@ class GUI:
         # self.draw_board()
         # test_tile.render_tile(self._board)
 
+    # FIXME: Change so this isn't a loop and is in the move function
     def go(self):
         while not self._terminated:
             self._game.spawn_tile()
