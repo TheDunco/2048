@@ -376,7 +376,7 @@ class Twenty48:
             self.column1_left()
 
         if self.game_over_check():
-            print('Game Over')
+            return True
 
     def game_over_check(self):
         '''Returns boolean of the game-over state'''

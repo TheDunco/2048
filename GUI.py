@@ -31,22 +31,14 @@ class GUI:
         self._window.bind('<Key>', self.key_event_handler)
         self._window.protocol('WM_DELETE_WINDOW', self.safe_exit)
 
+        # Create the header
+        self._header = Frame(self._window, bg='#FFFFFF', width=HEADER_WIDTH, height=HEADER_HEIGHT)
+
         # Create the board canvas
         self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
 
-        # Create the header
-        header = Frame(self._window, bg='#FFFFFF', width=HEADER_WIDTH, height=HEADER_HEIGHT)
-        header.grid(row=0, column=0, sticky=W+E)
-
-        # Create the title object for the header
-        title = Label(header, text='2048', font=('Roboto', 36), bg='#FFFFFF')
-        title.grid(row=0, column=0, sticky=NW)
-
-        # Create the new game button for the header
-        new_game = Button(header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
-        new_game.grid(row=1, column=0, sticky=NW)
-
         self.draw_board()
+        self.draw_header()
 
         self._game = Twenty48()
 
@@ -64,6 +56,21 @@ class GUI:
             tile.render_tile(self._board)
             self._board.update()
         self._board.update()
+
+    def draw_header(self):
+
+        for widget in self._header.winfo_children():
+            widget.destroy()
+
+        self._header.grid(row=0, column=0, sticky=W + E)
+
+        # Create the title object for the header
+        title = Label(self._header, text='2048', font=('Roboto', 36), bg='#FFFFFF')
+        title.grid(row=0, column=0, sticky=NW)
+
+        # Create the new game button for the header
+        new_game = Button(self._header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
+        new_game.grid(row=1, column=0, sticky=NW)
 
     def draw_board(self):
 
@@ -86,26 +93,39 @@ class GUI:
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
+        try:
+            if event.keysym == 'Up' or event.keysym == 'w':
+                # print('up')
+                if self._game.move_tiles('up'):
+                    self.game_over()
+                self.go()
 
-        if event.keysym == 'Up' or event.keysym == 'w':
-            # print('up')
-            self._game.move_tiles('up')
-            self.go()
+            elif event.keysym == 'Down' or event.keysym == 's':
+                # print('down')
+                if self._game.move_tiles('down'):
+                    self.game_over()
+                self.go()
 
-        elif event.keysym == 'Down' or event.keysym == 's':
-            # print('down')
-            self._game.move_tiles('down')
-            self.go()
+            elif event.keysym == 'Right' or event.keysym == 'd':
+                # print('right')
+                if self._game.move_tiles('right'):
+                    self.game_over()
+                self.go()
 
-        elif event.keysym == 'Right' or event.keysym == 'd':
-            # print('right')
-            self._game.move_tiles('right')
-            self.go()
+            elif event.keysym == 'Left' or event.keysym == 'a':
+                # print('left')
+                if self._game.move_tiles('left'):
+                    self.game_over()
+                self.go()
+        except ValueError:
+            pass
 
-        elif event.keysym == 'Left' or event.keysym == 'a':
-            # print('left')
-            self._game.move_tiles('left')
-            self.go()
+    def game_over(self):
+
+        for widget in self._header.winfo_children():
+            widget.destroy()
+
+        gg_label = Label(self._header, text='Game Over', font=('Roboto', 16), bg='#FFFFFF').pack()
 
     def safe_exit(self):
         '''Turn off the event loop before closing the GUI'''
