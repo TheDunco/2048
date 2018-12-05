@@ -10,17 +10,20 @@ from GUI import *
 from coords import *
 
 # FIXME: Make sure that it doesn't spawn a new tile when nothing moves: move the go() calls to the GUI maybe
+# FIXME: Add game over functionality
 # FIXME: ADD SCORE
-# FIXME Spawn Issue: Try making free_spaces an instance list and dynamically updated\
-# FIXME Spawn Issue:    instead of it generating a new list every time.
 
 
 class Twenty48:
 
     def __init__(self):
 
+        # self.gui = gui
+
         self._active_tiles = []
         self.init_active_tiles_list()
+
+        self._free_spaces = []
 
         self._coords = Coords()
 
@@ -40,13 +43,16 @@ class Twenty48:
                               Blank(), Blank(), Blank(), Blank(),
                               Blank(), Blank(), Blank(), Blank()]
 
+        self._free_spaces = [0, 1, 2, 3,
+                             4, 5, 6, 7,
+                             8, 9, 10, 11,
+                             12, 13, 14, 15]
+
     def spawn_tile(self, number):
         '''Spawns tiles with values 2 or 4 respective to percentages'''
 
+        # Choose whether the tile is a 2 or 4
         for i in range(number):
-
-            free_spaces = []
-            index = 0
 
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
             if number == 2:
@@ -62,20 +68,20 @@ class Twenty48:
             # Create a Tile object with the specified value
             tile = Tile(value)
 
-            for space in self._active_tiles:
-                if type(space) == Blank:
-                    free_spaces.append(index)
-                    index += 1
+            rand_free_range = randint(0, len(self._free_spaces)-1)
+            rand_space = self._free_spaces[rand_free_range]
 
-            rand_free_range = randint(0, len(free_spaces)-1)
-            rand_space = free_spaces[rand_free_range]
-
-            print(free_spaces)
             print(rand_space)
 
             # FIXME so that tiles can't spawn on top of existing ones
             if type(self._active_tiles[rand_space]) == Blank:
+                # Update the tile coordinates if the new space is a blank
                 tile.set_position_coords(self._coords.get_space(rand_space))
+
+                # Remove the new tile space from the free spaces list
+                self._free_spaces.remove(rand_space)
+
+                # Set the color and append the tile to the active_tiles instance list
                 tile.set_color()
                 self._active_tiles[tile.get_occupied_space_id()] = tile
 
@@ -98,9 +104,11 @@ class Twenty48:
 
             # Set space of tile 1 to blank
             self._active_tiles[index1] = Blank()
+            self._free_spaces.append(index1)
 
             # Update the merged tile
             self._active_tiles[index2] = tile2
+            # self._free_spaces.remove(index2)
 
     def row1_up(self):
         '''Move row 1 up to row 0'''
@@ -115,6 +123,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 4)))
                     self._active_tiles[index - 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 4)
 
@@ -131,6 +142,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 4)))
                     self._active_tiles[index - 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 4)
 
@@ -147,6 +161,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 4)))
                     self._active_tiles[index - 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 4)
 
@@ -163,6 +180,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 4)))
                     self._active_tiles[index + 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 4)
 
@@ -179,6 +199,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 4)))
                     self._active_tiles[index + 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 4)
 
@@ -195,6 +218,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 4)))
                     self._active_tiles[index + 4] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 4))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 4)
 
@@ -211,6 +237,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 1)))
                     self._active_tiles[index + 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 1)
 
@@ -227,6 +256,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 1)))
                     self._active_tiles[index + 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 1)
 
@@ -243,6 +275,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index + 1)))
                     self._active_tiles[index + 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index + 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index + 1)
 
@@ -259,6 +294,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 1)))
                     self._active_tiles[index - 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 1)
 
@@ -275,6 +313,9 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 1)))
                     self._active_tiles[index - 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 1)
 
@@ -291,11 +332,15 @@ class Twenty48:
                     tile.set_position_coords(self._coords.get_space((index - 1)))
                     self._active_tiles[index - 1] = tile
                     self._active_tiles[index] = Blank()
+                    # Add new tile space and remove old tile space from free_spaces
+                    self._free_spaces.remove((index - 1))
+                    self._free_spaces.append(index)
                 else:
                     self.merge(index, index - 1)
 
     def move_tiles(self, direction):
         if direction == 'up':
+            print(self._free_spaces)
             self.row1_up()
             self.row2_up()
             self.row1_up()
@@ -304,6 +349,7 @@ class Twenty48:
             self.row1_up()
 
         if direction == 'down':
+            print(self._free_spaces)
             self.row2_down()
             self.row1_down()
             self.row2_down()
@@ -312,6 +358,7 @@ class Twenty48:
             self.row2_down()
 
         if direction == 'right':
+            print(self._free_spaces)
             self.column2_right()
             self.column1_right()
             self.column2_right()
@@ -320,6 +367,7 @@ class Twenty48:
             self.column2_right()
 
         if direction == 'left':
+            print(self._free_spaces)
             self.column1_left()
             self.column2_left()
             self.column1_left()
@@ -327,17 +375,24 @@ class Twenty48:
             self.column2_left()
             self.column1_left()
 
+        if self.game_over_check():
+            print('Game Over')
+
     def game_over_check(self):
         '''Returns boolean of the game-over state'''
         # FIXME: Create dynamic accessor and mutator for SPACE occupied 'oc' slice and use that...
         # FIXME: Will have to create an accessor for SPACES list
-        for element in self._occupied_tiles:
-            if not element:
+        for element in self._active_tiles:
+            if type(element) == Blank:
                 return False
+        return True
 
 
 if __name__ == '__main__':
+    # root = Tk()
+    # root.title('2048')
+    # app = GUI(root)
+    # root.mainloop()
     game = Twenty48()
-
 
 
