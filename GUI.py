@@ -88,22 +88,22 @@ class GUI:
         '''Handle the keyboard events of arrow keys and WASD'''
 
         if event.keysym == 'Up' or event.keysym == 'w':
-            print('up')
+            # print('up')
             self._game.move_tiles('up')
             self.go()
 
         elif event.keysym == 'Down' or event.keysym == 's':
-            print('down')
+            # print('down')
             self._game.move_tiles('down')
             self.go()
 
         elif event.keysym == 'Right' or event.keysym == 'd':
-            print('right')
+            # print('right')
             self._game.move_tiles('right')
             self.go()
 
         elif event.keysym == 'Left' or event.keysym == 'a':
-            print('left')
+            # print('left')
             self._game.move_tiles('left')
             self.go()
 

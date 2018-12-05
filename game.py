@@ -11,6 +11,8 @@ from coords import *
 
 # FIXME: Make sure that it doesn't spawn a new tile when nothing moves: move the go() calls to the GUI maybe
 # FIXME: ADD SCORE
+# FIXME Spawn Issue: Try making free_spaces an instance list and dynamically updated\
+# FIXME Spawn Issue:    instead of it generating a new list every time.
 
 
 class Twenty48:
