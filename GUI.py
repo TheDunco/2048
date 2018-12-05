@@ -50,7 +50,7 @@ class GUI:
 
         self._game = Twenty48()
 
-        self.new_game()
+        self.go(2)
 
         # Early test code
         # test_tile = Tile(2048)
@@ -65,20 +65,17 @@ class GUI:
         # test_tile.render_tile(self._board)
 
     # FIXME: Change so this isn't a loop and is in the move function
-    def go(self):
-        while not self._terminated:
-            self._board.delete(ALL)
-            self._game.init_active_tiles_list()
-            self._game.spawn_tile()
-            for tile in self._game.get_tiles_list():
-                tile.set_color()
-                # self._board.delete(ALL)
-                self.draw_board()
-                tile.render_tile(self._board)
+    def go(self, number=1):
+                self._board.delete(ALL)
+                self._game.spawn_tile(number)
+                for tile in self._game.get_tiles_list():
+                    tile.set_color()
+                    # self._board.delete(ALL)
+                    self.draw_board()
+                    tile.render_tile(self._board)
+                    self._board.update()
+                self._board.after(10)
                 self._board.update()
-            self._board.after(10)
-            self._board.update()
-            break
 
     def draw_board(self):
 
@@ -113,6 +110,7 @@ class GUI:
         if event.keysym == 'Up' or event.keysym == 'w':
             print('up')
             self._game.move_tiles('up')
+            self.go()
 
         if event.keysym == 'Down' or event.keysym == 's':
             print('down')
@@ -125,10 +123,10 @@ class GUI:
         self._window.destroy()
 
     def new_game(self):
-        self._game.spawn_tile()
-        self._board.after(10)
-        self._board.update()
-        self.go()
+        self._board.delete(ALL)
+        self.draw_board()
+        self._game.init_active_tiles_list()
+        self.go(2)
 
     def get_board(self):
         return self._board
