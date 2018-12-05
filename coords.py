@@ -153,14 +153,14 @@ class Coords:
 
         self._COLUMNS = [self._COLUMN0, self._COLUMN1, self._COLUMN2, self._COLUMN3]
 
-    def switch_space_occupation(self, space_number=0, explicit=None):
-        '''Dynamically switch or set the occupation boolean of the space'''
-        if explicit != None:
-            command = "self._SPACE{}['id'] = not self._SPACE{}['id']".format(space_number)
-            exec(command)
-        else:
-            command = "self._SPACE{0}['id'] = {}".format(space_number, explicit)
-            exec(command)
+    # def switch_space_occupation(self, space_number=0, explicit=None):
+    #     '''Dynamically switch or set the occupation boolean of the space'''
+    #     if explicit != None:
+    #         command = "self._SPACE{}['id'] = not self._SPACE{}['id']".format(space_number)
+    #         exec(command)
+    #     else:
+    #         command = "self._SPACE{0}['id'] = {}".format(space_number, explicit)
+    #         exec(command)
 
     def get_space(self, space_number):
         '''Dynamically return the number of the space'''

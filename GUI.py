@@ -50,21 +50,9 @@ class GUI:
 
         self._game = Twenty48()
 
-        self.go(2)
+        self.new_game()
+        # self.go(2)
 
-        # Early test code
-        # test_tile = Tile(2048)
-        # print(test_tile.get_color())
-        # print(test_tile.get_value())
-        # test_tile.set_color()
-        # print(test_tile.get_color())
-        # test_tile.render_tile(self._board)
-        # test_tile.set_position_coords(SPACE1)
-        # self._board.delete(ALL)
-        # self.draw_board()
-        # test_tile.render_tile(self._board)
-
-    # FIXME: Change so this isn't a loop and is in the move function
     def go(self, number=1):
                 self._board.delete(ALL)
                 self._game.spawn_tile(number)
@@ -115,6 +103,7 @@ class GUI:
         if event.keysym == 'Down' or event.keysym == 's':
             print('down')
             self._game.move_tiles('down')
+            self.go()
 
     def safe_exit(self):
         '''Turn off the event loop before closing the GUI'''
@@ -123,6 +112,7 @@ class GUI:
         self._window.destroy()
 
     def new_game(self):
+        '''Start a new game'''
         self._board.delete(ALL)
         self.draw_board()
         self._game.init_active_tiles_list()

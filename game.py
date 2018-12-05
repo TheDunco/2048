@@ -9,14 +9,12 @@ from random import randint
 from GUI import *
 from coords import *
 
-# FIXME: Add safe exit method
+# FIXME: ADD SCORE
 
 
 class Twenty48:
 
     def __init__(self):
-
-        self._score = 0
 
         self._active_tiles = []
         self.init_active_tiles_list()
@@ -41,8 +39,6 @@ class Twenty48:
 
     def spawn_tile(self, number):
         '''Spawns tiles with values 2 or 4 respective to percentages'''
-
-        spawned = False
 
         for i in range(number):
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
@@ -93,26 +89,120 @@ class Twenty48:
             # Update the merged tile
             self._active_tiles[index2] = tile2
 
+    def row1_up(self):
+        '''Move row 1 up to row 0'''
+        for index in self._row1:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 4)))
+                    self._active_tiles[index - 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 4)
+
+    def row2_up(self):
+        '''Move row2 up to row 1'''
+        for index in self._row2:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 4)))
+                    self._active_tiles[index - 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 4)
+
+    def row3_up(self):
+        '''Move row 3 up to row 2'''
+        for index in self._row3:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 4)))
+                    self._active_tiles[index - 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 4)
+
+    def row0_down(self):
+        '''Move row 0 down to row 1'''
+        for index in self._row0:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 4)))
+                    self._active_tiles[index + 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 4)
+
+    def row1_down(self):
+        '''Move row1 down to row 2'''
+        for index in self._row1:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 4)))
+                    self._active_tiles[index + 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 4)
+
+    def row2_down(self):
+        '''Move row 2 down to row 3'''
+        for index in self._row2:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 4]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 4)))
+                    self._active_tiles[index + 4] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 4)
+
     def move_tiles(self, direction):
         if direction == 'up':
-
-            for index in self._row1:
-                # Find all of the tiles in the row
-                if type(self._active_tiles[index]) == Tile:
-                    # Make sure that the space to move to is blank
-                    if type(self._active_tiles[index-4]) == Blank:
-                        # Get the tile to be moved from the active_tiles_list
-                        tile = self._active_tiles[index]
-                        # Set the position of the tile to the new space
-                        tile.set_position_coords(self._coords.get_space((index - 4)))
-                        self._active_tiles[index-4] = tile
-                        self._active_tiles[index] = Blank()
-                    else:
-                        print(self._active_tiles[index-4])
-                        self.merge(index, index-4)
+            self.row1_up()
+            self.row2_up()
+            self.row1_up()
+            self.row3_up()
+            self.row2_up()
+            self.row1_up()
 
         if direction == 'down':
-            pass
+            self.row2_down()
+            self.row1_down()
+            self.row2_down()
+            self.row0_down()
+            self.row1_down()
+            self.row2_down()
+
+
         if direction == 'right':
             pass
         if direction == 'left':

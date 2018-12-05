@@ -59,7 +59,7 @@ class Tile:
         self._occupied_space_id = space['id']
 
     def set_color(self):
-        '''Sets the color according go the value of tile
+        '''Sets the color according to the value of tile
         Colors from https://www.materialpalette.com/'''
 
         colors = {
