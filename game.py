@@ -9,6 +9,7 @@ from random import randint
 from GUI import *
 from coords import *
 
+# FIXME: Make sure that it doesn't spawn a new tile when nothing moves: move the go() calls to the GUI maybe
 # FIXME: ADD SCORE
 
 
@@ -41,6 +42,10 @@ class Twenty48:
         '''Spawns tiles with values 2 or 4 respective to percentages'''
 
         for i in range(number):
+
+            free_spaces = []
+            index = 0
+
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
             if number == 2:
                 rand_percent = randint(0, 10)
@@ -54,17 +59,23 @@ class Twenty48:
 
             # Create a Tile object with the specified value
             tile = Tile(value)
-            rand_space = randint(0, 15)
+
+            for space in self._active_tiles:
+                if type(space) == Blank:
+                    free_spaces.append(index)
+                    index += 1
+
+            rand_free_range = randint(0, len(free_spaces)-1)
+            rand_space = free_spaces[rand_free_range]
+
+            print(free_spaces)
+            print(rand_space)
 
             # FIXME so that tiles can't spawn on top of existing ones
-            # while not spawned:
             if type(self._active_tiles[rand_space]) == Blank:
                 tile.set_position_coords(self._coords.get_space(rand_space))
                 tile.set_color()
                 self._active_tiles[tile.get_occupied_space_id()] = tile
-                # spawned = True
-                # else:
-                #     continue
 
     def get_tiles_list(self):
         '''Return the list of active tiles'''
@@ -313,11 +324,6 @@ class Twenty48:
             self.column3_left()
             self.column2_left()
             self.column1_left()
-
-    def draw_tiles(self):
-        '''Render the tiles'''
-        for tile in self._active_tiles:
-            tile.render(self._board)
 
     def game_over_check(self):
         '''Returns boolean of the game-over state'''
