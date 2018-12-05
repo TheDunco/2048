@@ -185,6 +185,102 @@ class Twenty48:
                 else:
                     self.merge(index, index + 4)
 
+    def column0_right(self):
+        '''Move column0 to column1'''
+        for index in self._column0:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 1)))
+                    self._active_tiles[index + 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 1)
+
+    def column1_right(self):
+        '''Move column1 to column2'''
+        for index in self._column1:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 1)))
+                    self._active_tiles[index + 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 1)
+
+    def column2_right(self):
+        '''Move column2 to column3'''
+        for index in self._column2:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index + 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index + 1)))
+                    self._active_tiles[index + 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index + 1)
+
+    def column1_left(self):
+        '''Move column1 to column0'''
+        for index in self._column1:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 1)))
+                    self._active_tiles[index - 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 1)
+
+    def column2_left(self):
+        '''Move column2 to column1'''
+        for index in self._column2:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 1)))
+                    self._active_tiles[index - 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 1)
+
+    def column3_left(self):
+        '''Move column3 to column2'''
+        for index in self._column3:
+            # Find all of the tiles in the row
+            if type(self._active_tiles[index]) == Tile:
+                # Make sure that the space to move to is blank
+                if type(self._active_tiles[index - 1]) == Blank:
+                    # Get the tile to be moved from the active_tiles_list
+                    tile = self._active_tiles[index]
+                    # Set the position of the tile to the new space
+                    tile.set_position_coords(self._coords.get_space((index - 1)))
+                    self._active_tiles[index - 1] = tile
+                    self._active_tiles[index] = Blank()
+                else:
+                    self.merge(index, index - 1)
+
     def move_tiles(self, direction):
         if direction == 'up':
             self.row1_up()
@@ -202,11 +298,21 @@ class Twenty48:
             self.row1_down()
             self.row2_down()
 
-
         if direction == 'right':
-            pass
+            self.column2_right()
+            self.column1_right()
+            self.column2_right()
+            self.column0_right()
+            self.column1_right()
+            self.column2_right()
+
         if direction == 'left':
-            pass
+            self.column1_left()
+            self.column2_left()
+            self.column1_left()
+            self.column3_left()
+            self.column2_left()
+            self.column1_left()
 
     def draw_tiles(self):
         '''Render the tiles'''

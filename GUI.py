@@ -54,16 +54,16 @@ class GUI:
         # self.go(2)
 
     def go(self, number=1):
-                self._board.delete(ALL)
-                self._game.spawn_tile(number)
-                for tile in self._game.get_tiles_list():
-                    tile.set_color()
-                    # self._board.delete(ALL)
-                    self.draw_board()
-                    tile.render_tile(self._board)
-                    self._board.update()
-                self._board.after(10)
-                self._board.update()
+        '''Spawns and redraws tiles: for after a move'''
+        self._board.delete(ALL)
+        self._game.spawn_tile(number)
+        for tile in self._game.get_tiles_list():
+            tile.set_color()
+            # self._board.delete(ALL)
+            self.draw_board()
+            tile.render_tile(self._board)
+            self._board.update()
+        self._board.update()
 
     def draw_board(self):
 
@@ -87,22 +87,24 @@ class GUI:
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
 
-        if event.keysym == 'Right' or event.keysym == 'd':
-            print('right')
-            self._game.move_tiles('right')
-
-        if event.keysym == 'Left' or event.keysym == 'a':
-            print('left')
-            self._game.move_tiles('left')
-
         if event.keysym == 'Up' or event.keysym == 'w':
             print('up')
             self._game.move_tiles('up')
             self.go()
 
-        if event.keysym == 'Down' or event.keysym == 's':
+        elif event.keysym == 'Down' or event.keysym == 's':
             print('down')
             self._game.move_tiles('down')
+            self.go()
+
+        elif event.keysym == 'Right' or event.keysym == 'd':
+            print('right')
+            self._game.move_tiles('right')
+            self.go()
+
+        elif event.keysym == 'Left' or event.keysym == 'a':
+            print('left')
+            self._game.move_tiles('left')
             self.go()
 
     def safe_exit(self):
