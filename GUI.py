@@ -126,6 +126,7 @@ class GUI:
             widget.destroy()
 
         gg_label = Label(self._header, text='Game Over', font=('Roboto', 16), bg='#FFFFFF').pack()
+        # FIXME: Add exit and new game buttons here
 
     def safe_exit(self):
         '''Turn off the event loop before closing the GUI'''

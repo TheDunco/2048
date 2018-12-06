@@ -110,6 +110,8 @@ class Twenty48:
             self._active_tiles[index2] = tile2
             # self._free_spaces.remove(index2)
 
+            # FIXME: If merge occurs, stop movement chain and update the canvas
+
     def row1_up(self):
         '''Move row 1 up to row 0'''
         for index in self._row1:
