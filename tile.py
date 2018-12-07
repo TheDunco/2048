@@ -85,7 +85,7 @@ class Blank:
 
     # Accessor functions
     def get_value(self):
-        pass
+        return 0
 
     def get_color(self):
         pass

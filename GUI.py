@@ -24,8 +24,10 @@ class GUI:
 
     def __init__(self, window):
         '''Constructor for GUI class'''
-
         self._terminated = False
+
+        # FIXME: Display score!!!
+        self._score = IntVar()
 
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
@@ -35,30 +37,24 @@ class GUI:
         self._header = Frame(self._window, bg='#FFFFFF', width=HEADER_WIDTH, height=HEADER_HEIGHT)
 
         # Create the board canvas
-        self._board = Canvas(self._window, bg='#CCCCCC', width=BOARD_WIDTH, height=BOARD_HEIGHT)
+        self._board = Canvas(self._window, bg='#EEEEEE', width=BOARD_WIDTH, height=BOARD_HEIGHT)
 
         self.draw_board()
         self.draw_header()
 
-        self._game = Twenty48()
+        self._game = Twenty48(self._board, self)
 
         self.new_game()
-        # self.go(2)
 
-    def go(self, number=1):
-        '''Spawns and redraws tiles: for after a move'''
+    def refresh(self):
         self._board.delete(ALL)
-        self._game.spawn_tile(number)
-        for tile in self._game.get_tiles_list():
-            tile.set_color()
-            # self._board.delete(ALL)
-            self.draw_board()
-            tile.render_tile(self._board)
-            self._board.update()
+        self.draw_board()
+        self._game.draw_tiles()
         self._board.update()
 
     def draw_header(self):
 
+        # Destory all the widgets in the header frame
         for widget in self._header.winfo_children():
             widget.destroy()
 
@@ -71,6 +67,10 @@ class GUI:
         # Create the new game button for the header
         new_game = Button(self._header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
         new_game.grid(row=1, column=0, sticky=NW)
+
+        # Create the score display
+        score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF').grid(column=1, row=0)
+        score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16 ), bg='#FFFFFF').grid(column=2, row=0)
 
     def draw_board(self):
 
@@ -95,38 +95,22 @@ class GUI:
         '''Handle the keyboard events of arrow keys and WASD'''
         try:
             if event.keysym == 'Up' or event.keysym == 'w':
-                # print('up')
-                if self._game.move_tiles('up'):
-                    self.game_over()
-                self.go()
+                self._game.move_tiles('up')
 
             elif event.keysym == 'Down' or event.keysym == 's':
-                # print('down')
-                if self._game.move_tiles('down'):
-                    self.game_over()
-                self.go()
+                self._game.move_tiles('down')
 
             elif event.keysym == 'Right' or event.keysym == 'd':
-                # print('right')
-                if self._game.move_tiles('right'):
-                    self.game_over()
-                self.go()
+                self._game.move_tiles('right')
 
             elif event.keysym == 'Left' or event.keysym == 'a':
-                # print('left')
-                if self._game.move_tiles('left'):
-                    self.game_over()
-                self.go()
+                self._game.move_tiles('left')
+
         except ValueError:
             pass
 
-    def game_over(self):
-
-        for widget in self._header.winfo_children():
-            widget.destroy()
-
-        gg_label = Label(self._header, text='Game Over', font=('Roboto', 16), bg='#FFFFFF').pack()
-        # FIXME: Add exit and new game buttons here
+    def set_score(self, score):
+        self._score.set(score)
 
     def safe_exit(self):
         '''Turn off the event loop before closing the GUI'''
@@ -137,13 +121,15 @@ class GUI:
     def new_game(self):
         '''Start a new game'''
         self._board.delete(ALL)
+        self._game.set_score(0)
+        self._score.set(0)
         self.draw_board()
-        self._game.init_active_tiles_list()
-        self.go(2)
+        self._game.init_vals_list()
+        self._game.spawn_tile(2)
+        self._game.draw_tiles()
 
     def get_board(self):
         return self._board
-
 
 if __name__ == '__main__':
     root = Tk()
