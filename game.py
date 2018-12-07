@@ -12,6 +12,7 @@ from coords import *
 # FIXME: Make sure that it doesn't spawn a new tile when nothing moves: move the go() calls to the GUI maybe
 # FIXME: Add game over functionality
 # FIXME: ADD SCORE
+# FIXME: Try creating a copy of active_tiles_list to see if the current board state is equal to the copy of the old board
 
 
 class Twenty48:
@@ -73,7 +74,6 @@ class Twenty48:
 
             print(rand_space)
 
-            # FIXME so that tiles can't spawn on top of existing ones
             if type(self._active_tiles[rand_space]) == Blank:
                 # Update the tile coordinates if the new space is a blank
                 tile.set_position_coords(self._coords.get_space(rand_space))
