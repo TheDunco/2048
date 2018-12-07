@@ -35,7 +35,7 @@ class Twenty48:
             8: '#757575',
             16: '#FFCDD2',
             32: '#03A9F4',
-            64: '#FFF980',
+            64: '#003366',
             128: '#E91E63',
             256: '#CDDC39',
             512: '#E040FB',
@@ -63,6 +63,8 @@ class Twenty48:
     def spawn_tile(self, number):
         '''Spawns tiles with values 2 or 4 respective to percentages'''
 
+        # FIXME: Debug: This is still broken and only spawns on ~1st row and still overwrites tiles
+        # FIXME: Is this the cause of random tiles disappearing?
         for i in range(number):
 
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
@@ -78,7 +80,7 @@ class Twenty48:
 
             free_spaces = []
 
-            for index in range(len(self._vals)-1):
+            for index in range(16):
                 if self._vals[index] == 0:
                     # Create a list of the indices of free spaces
                     free_spaces.append(index)
@@ -123,6 +125,9 @@ class Twenty48:
             self.spawn_tile(1)
             self._gui.refresh()
 
+        if self.game_over_check():
+            print('Game 0ver!')
+
     def move_tiles(self, direction):
         if direction == 'up':
             self._move(range(4, 16), (-4))
@@ -144,7 +149,20 @@ class Twenty48:
 
     def game_over_check(self):
         '''Returns boolean of the game-over state'''
-        pass
+        if not 0 in self._vals:
+            for index in range(16):
+                try:
+                    if self._vals[index] == self._vals[index-4] or \
+                            self._vals[index] == self._vals[index+4] or \
+                            self._vals[index] == self._valse[index+1] or \
+                            self._valse[index] == self._vals[index-1]:
+                            return False
+
+                except IndexError:
+                    continue
+            return True
+
+
 
 
 

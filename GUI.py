@@ -28,6 +28,12 @@ class GUI:
         # FIXME: Display score!!!
         self._score = IntVar()
 
+        # Set the high score to the score in the file
+        self._high_score = IntVar()
+        with open('high_score.txt', 'r') as hs:
+            for line in hs:
+                self._high_score.set(line)
+
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
         self._window.protocol('WM_DELETE_WINDOW', self.safe_exit)
@@ -50,6 +56,10 @@ class GUI:
         self.draw_board()
         self._game.draw_tiles()
         self._board.update()
+        if self._score.get() > self._high_score.get():
+            self._high_score.set(self._score.get())
+            with open('high_score.txt', 'w') as hs:
+                hs.write(str(self._score.get()))
 
     def draw_header(self):
 
@@ -67,9 +77,20 @@ class GUI:
         new_game = Button(self._header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
         new_game.grid(row=1, column=0, sticky=NW)
 
+        spacer = Label(self._header, text='                                     ', bg='#FFFFFF').grid(row=0, column=1)
+
         # Create the score display
-        score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF').grid(column=1, row=0)
-        score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16 ), bg='#FFFFFF').grid(column=2, row=0)
+        score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
+        score_label.grid(column=2, row=0, sticky=W)
+
+        score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16 ), bg='#FFFFFF')
+        score_var.grid(column=3, row=0)
+
+        high_score_label = Label(self._header, text='High Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
+        high_score_label.grid(column=2, row=1)
+
+        high_score_var = Label(self._header, textvar=str(self._high_score), font=('Roboto', 16 ), bg='#FFFFFF')
+        high_score_var.grid(column=3, row=1)
 
     def draw_board(self):
 
