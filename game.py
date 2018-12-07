@@ -4,7 +4,6 @@ Created Fall 2018
 @author: Duncan Van Keulen
 '''
 
-from tile import *
 from random import randint
 from GUI import *
 from coords import *

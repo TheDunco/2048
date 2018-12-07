@@ -6,7 +6,6 @@ Created Fall 2018
 
 from tkinter import *
 from coords import *
-from tile import *
 from game import *
 
 # Set the board width and height variables
