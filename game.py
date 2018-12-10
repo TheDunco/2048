@@ -76,11 +76,6 @@ class Twenty48:
             else:
                 value = 2
 
-            # self._vals = [2, 0, 0, 0,
-            #               0, 0, 0, 0,
-            #               0, 0, 0, 0,
-            #               0, 0, 0, 4]
-
             free_spaces = []
 
             for index in range(16):
@@ -133,10 +128,10 @@ class Twenty48:
             self._move(range(4, 16), (-4))
 
         if direction == 'down':
-            self._move(range(0, 12), 4)
+            self._move([12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], 4)
 
         if direction == 'right':
-            self._move([0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14], 1)
+            self._move([2, 1, 0, 6, 5, 4, 10, 9, 8, 14, 13, 12], 1) # [0, 1, 2, 4, 5, 6, 8, 9, 10, 12, 13, 14], 1)
 
         if direction == 'left':
             self._move([1, 2, 3, 5, 6, 7, 9, 10, 11, 13, 14, 15], (-1))

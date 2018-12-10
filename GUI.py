@@ -19,6 +19,8 @@ HEADER_WIDTH = 400
 HEADER_HEIGHT = 200
 
 # FIXME: Implement help/how to play menu
+# FIXME: Add color schemes
+# FIXME: Merging issues
 
 class GUI:
 
