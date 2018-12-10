@@ -156,6 +156,10 @@ class Twenty48:
 
     def game_over_check(self):
         '''Returns boolean of the game-over state'''
+
+        # FIXME: This logic isn't always working, probably because index error...
+        # FIXME: Either make it check each individual tile or think harder...
+
         if not 0 in self._vals:
             for index in range(16):
                 try:
@@ -163,10 +167,15 @@ class Twenty48:
                             self._vals[index] == self._vals[index+4] or \
                             self._vals[index] == self._vals[index+1] or \
                             self._vals[index] == self._vals[index-1]:
+                            print('Game not over')
+                            # The game is not yet over
                             return False
 
                 except IndexError:
+                    print('Encountered index error')
                     continue
+            print('Game over')
+            # The game is over
             return True
 
 

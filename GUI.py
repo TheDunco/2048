@@ -56,6 +56,8 @@ class GUI:
         self.draw_board()
         self._game.draw_tiles()
         self._board.update()
+
+        # High score updating
         if self._score.get() > self._high_score.get():
             self._high_score.set(self._score.get())
             try:
@@ -80,7 +82,7 @@ class GUI:
         new_game = Button(self._header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
         new_game.grid(row=1, column=0, sticky=NW)
 
-        spacer = Label(self._header, text='                                     ', bg='#FFFFFF').grid(row=0, column=1)
+        spacer = Label(self._header, text='                             ', bg='#FFFFFF').grid(row=0, column=1)
 
         # Create the score display
         score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
@@ -114,6 +116,10 @@ class GUI:
         self._board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
+    def draw_help_screen(self):
+        print('help')
+        pass
+
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
         try:
@@ -132,13 +138,23 @@ class GUI:
             elif event.keysym == 'q':
                 self.game_over()
 
+            elif event.keysym == 'h':
+                self.draw_help_screen()
+
+            elif event.keysym == 'p':
+                print('Resetting high score')
+                with open('high_score.txt', 'w') as file:
+                    file.write('0')
+                self.safe_exit()
+
         except ValueError:
             pass
 
     def game_over(self):
         print('Game over')
         # self._board.delete(ALL)
-        self._board.create_text((200, 150), text='Game Over!', font=('Roboto', 24))
+        self._board.create_text((200, 140), text='Game Over!', font=('Roboto', 36, 'bold', 'underline'))
+        # FIXME: Make an entry field appear for username of high score if score was beat...
 
     def set_score(self, score):
         self._score.set(score)
@@ -146,8 +162,8 @@ class GUI:
     def safe_exit(self):
         '''Turn off the event loop before closing the GUI'''
 
-        self._terminated = True
         self._window.destroy()
+        exit()
 
     def new_game(self):
         '''Start a new game'''
@@ -161,6 +177,7 @@ class GUI:
 
     def get_board(self):
         return self._board
+
 
 if __name__ == '__main__':
     root = Tk()
