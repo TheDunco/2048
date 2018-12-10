@@ -7,20 +7,6 @@ Created Fall 2018
 
 class Coords:
     def __init__(self):
-        self._BOARD_SPACE_COORDS = [
-            [(0, 0), (100, 100)], [(100, 0), (200, 100)], [(200, 0), (300, 100)], [(300, 0), (400, 100)],
-            [(0, 100), (100, 200)], [(100, 100), (200, 200)], [(200, 100), (300, 200)], [(300, 100), (400, 200)],
-            [(0, 200), (100, 300)], [(100, 200), (200, 300)], [(200, 200), (300, 300)], [(300, 200), (400, 300)],
-            [(0, 300), (100, 400)], [(100, 300), (200, 400)], [(200, 300), (300, 400)], [(300, 300), (400, 400)]
-        ]
-
-        self._BOARD_CENTER_SPACE_COORDS = [
-            (50,50), (150,50), (250,50), (350,50),
-            (50,150), (150,150), (250,150), (350,150),
-            (50,250), (150,250), (250,250), (350,250),
-            (50,350), (150,350), (250,350), (350,350)
-
-        ]
 
         self._SPACE0 = {
             'x1': 0, 'y1': 0,
@@ -139,49 +125,7 @@ class Coords:
                         self._SPACE8, self._SPACE9, self._SPACE10, self._SPACE11,
                         self._SPACE12, self._SPACE13, self._SPACE14, self._SPACE15]
 
-        self._ROW0 = [self._SPACE0, self._SPACE1, self._SPACE2, self._SPACE3]
-        self._ROW1 = [self._SPACE4, self._SPACE5, self._SPACE6, self._SPACE7]
-        self._ROW2 = [self._SPACE8, self._SPACE9, self._SPACE10, self._SPACE11]
-        self._ROW3 = [self._SPACE12, self._SPACE13, self._SPACE14, self._SPACE15]
-
-        self._ROWS = [self._ROW0, self._ROW1, self._ROW2, self._ROW3]
-
-        self._COLUMN0 = [self._SPACE0, self._SPACE4, self._SPACE8, self._SPACE12]
-        self._COLUMN1 = [self._SPACE1, self._SPACE5, self._SPACE9, self._SPACE13]
-        self._COLUMN2 = [self._SPACE2, self._SPACE6, self._SPACE10, self._SPACE14]
-        self._COLUMN3 = [self._SPACE3, self._SPACE7, self._SPACE11, self._SPACE15]
-
-        self._COLUMNS = [self._COLUMN0, self._COLUMN1, self._COLUMN2, self._COLUMN3]
-
-    # def switch_space_occupation(self, space_number=0, explicit=None):
-    #     '''Dynamically switch or set the occupation boolean of the space'''
-    #     if explicit != None:
-    #         command = "self._SPACE{}['id'] = not self._SPACE{}['id']".format(space_number)
-    #         exec(command)
-    #     else:
-    #         command = "self._SPACE{0}['id'] = {}".format(space_number, explicit)
-    #         exec(command)
-
     def get_space(self, space_number):
-        '''Dynamically return the number of the space'''
+        '''Dynamically return the specified space dictionary'''
         return self._SPACES[space_number]
 
-    def get_row(self, row_number):
-        '''Dynamically return the number of the row'''
-        return self._SPACES[row_number]
-
-    def get_column(self, column_number):
-        '''Dynamically return the number of the column'''
-        return self._SPACES[column_number]
-
-    def get_spaces(self):
-        '''Accessor for SPACES list'''
-        return self._SPACES
-
-    def get_rows(self):
-        '''Accessor for ROWS list'''
-        return self._ROWS
-
-    def get_columns(self):
-        '''Accessor for COLUMNS list'''
-        return self._COLUMNS

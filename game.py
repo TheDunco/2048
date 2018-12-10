@@ -63,13 +63,6 @@ class Twenty48:
     def spawn_tile(self, number):
         '''Spawns tiles with values 2 or 4 respective to percentages'''
 
-        # FIXME: Debug: This is still broken and only spawns on ~1st row and still overwrites tiles
-        # FIXME: Is this the cause of random tiles disappearing?
-        # Test values
-        # self._vals = [2, 4, 8, 16,
-        #               32, 0, 2, 4,
-        #               64, 1024, 2, 2,
-        #               2048, 4, 4, 8]
         for i in range(number):
 
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
@@ -160,22 +153,38 @@ class Twenty48:
         # FIXME: This logic isn't always working, probably because index error...
         # FIXME: Either make it check each individual tile or think harder...
 
-        if not 0 in self._vals:
-            for index in range(16):
-                try:
-                    if self._vals[index] == self._vals[index-4] or \
-                            self._vals[index] == self._vals[index+4] or \
-                            self._vals[index] == self._vals[index+1] or \
-                            self._vals[index] == self._vals[index-1]:
-                            print('Game not over')
-                            # The game is not yet over
-                            return False
+        if 0 not in self._vals:
+            # Return false if a move can be made by moving up
+            for index in [0, 1, 2, 3,
+                          4, 5, 6, 7,
+                          8, 9, 10, 11]:
+                if self._vals[index] == self._vals[index + 4]:
+                    return False
 
-                except IndexError:
-                    print('Encountered index error')
-                    continue
-            print('Game over')
-            # The game is over
+            # Return false if a move can be made by moving down
+            for index in [4, 5, 6, 7,
+                          8, 9, 10, 11,
+                          12, 13, 14, 15]:
+                if self._vals[index] == self._vals[index - 4]:
+                    return False
+
+            # Return false if a move can be made by moving right
+            for index in [0, 1, 2,
+                          4, 5, 6,
+                          8, 9, 10,
+                          12, 13, 14]:
+                if self._vals[index] == self._vals[index + 1]:
+                    return False
+
+            # Return false if a move can be made by moving left
+            for index in [1, 2, 3,
+                          5, 6, 7,
+                          9, 10, 11,
+                          13, 14, 15]:
+                if self._vals[index] == self._vals[index - 1]:
+                    return False
+
+            # If no moves can be made, the game is over
             return True
 
 

@@ -25,7 +25,6 @@ class GUI:
         '''Constructor for GUI class'''
         self._terminated = False
 
-        # FIXME: Display score!!!
         self._score = IntVar()
 
         # Set the high score to the score in the file
@@ -151,7 +150,6 @@ class GUI:
             pass
 
     def game_over(self):
-        print('Game over')
         # self._board.delete(ALL)
         self._board.create_text((200, 140), text='Game Over!', font=('Roboto', 36, 'bold', 'underline'))
         # FIXME: Make an entry field appear for username of high score if score was beat...
