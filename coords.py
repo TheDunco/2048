@@ -128,4 +128,3 @@ class Coords:
     def get_space(self, space_number):
         '''Dynamically return the specified space dictionary'''
         return self._SPACES[space_number]
-

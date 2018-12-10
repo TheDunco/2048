@@ -23,11 +23,16 @@ HEADER_HEIGHT = 200
 # FIXME: Merging issues
 
 class GUI:
+    '''
+    GUI Class for 2048 game.
+    Receives a tkinter object
+    Handles drawing and refreshing the screen as well as menus
+    '''
 
     def __init__(self, window):
         '''Constructor for GUI class'''
-        self._terminated = False
 
+        # Initialize the score wrapper variable
         self._score = IntVar()
 
         # Set the high score to the score in the file
@@ -36,6 +41,7 @@ class GUI:
             for line in hs:
                 self._high_score.set(line)
 
+        # Set up general window and key bindings
         self._window = window
         self._window.bind('<Key>', self.key_event_handler)
         self._window.protocol('WM_DELETE_WINDOW', self.safe_exit)
@@ -46,17 +52,26 @@ class GUI:
         # Create the board canvas
         self._board = Canvas(self._window, bg='#EEEEEE', width=BOARD_WIDTH, height=BOARD_HEIGHT)
 
+        # Initially draw the header and board
         self.draw_board()
         self.draw_header()
 
+        # Create a game object and pass it the instance of the GUI object
         self._game = Twenty48(self._board, self)
 
+        # Start a new game
         self.new_game()
 
     def refresh(self):
+        '''Refresh the screen'''
+
+        # Clear the board and all tiles
         self._board.delete(ALL)
+        # Redraw the board
         self.draw_board()
+        # Redraw tiles in current state
         self._game.draw_tiles()
+        # Updtate the board
         self._board.update()
 
         # High score updating
@@ -69,6 +84,7 @@ class GUI:
                 pass
 
     def draw_header(self):
+        '''Draw the header with new game and scores'''
 
         # Destory all the widgets in the header frame
         for widget in self._header.winfo_children():
@@ -86,21 +102,26 @@ class GUI:
 
         spacer = Label(self._header, text='                             ', bg='#FFFFFF').grid(row=0, column=1)
 
-        # Create the score display
+        # Create the score display label
         score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
         score_label.grid(column=2, row=0, sticky=W)
 
+        # Create the score display variable
         score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16 ), bg='#FFFFFF')
         score_var.grid(column=3, row=0)
 
+        # Create the high score display label
         high_score_label = Label(self._header, text='High Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
         high_score_label.grid(column=2, row=1)
 
+        # Create the high score display variable
         high_score_var = Label(self._header, textvar=str(self._high_score), font=('Roboto', 16 ), bg='#FFFFFF')
         high_score_var.grid(column=3, row=1)
 
     def draw_board(self):
+        '''Draw the play board'''
 
+        # Grid (pack) the board initialized in the constructor
         self._board.grid(row=1, column=0)
 
         # FIXME: Put in for loops
@@ -119,14 +140,19 @@ class GUI:
         self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
     def draw_help_screen(self):
+        '''Draw the "how to play" tip'''
 
-        # FIXME: Add help/how to play menu (Label underneath board)
-        print('help')
-        pass
+        # Create the instructional help label below the board
+        help_label = Label(self._window,
+                           text='Use arrow keys or WASD to move tiles.\nLike tiles merge. Get 2048 tile to win.',
+                           font=('Roboto', 16))
+        help_label.grid(row=2, column=0, columnspan=1)
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
+
         try:
+            # Movement key bindings...
             if event.keysym == 'Up' or event.keysym == 'w':
                 self._game.move_tiles('up')
 
@@ -139,12 +165,15 @@ class GUI:
             elif event.keysym == 'Left' or event.keysym == 'a':
                 self._game.move_tiles('left')
 
+            # Quit keybinding
             elif event.keysym == 'q':
                 self.game_over()
 
+            # Help screen keybinding
             elif event.keysym == 'h':
                 self.draw_help_screen()
 
+            # Keybinding for resetting the high score
             elif event.keysym == 'p':
                 print('Resetting high score')
                 with open('high_score.txt', 'w') as file:
@@ -155,36 +184,46 @@ class GUI:
             pass
 
     def game_over(self):
-        # self._board.delete(ALL)
+        '''Displays if the game is over'''
+
+        # Create game over label
         self._board.create_text((200, 140), text='Game Over!', font=('Roboto', 36, 'bold', 'underline'))
         # FIXME: Make an entry field appear for username of high score if score was beat...
 
     def set_score(self, score):
+        '''Mutator for the score wrapper variable'''
         self._score.set(score)
 
     def safe_exit(self):
-        '''Turn off the event loop before closing the GUI'''
+        '''Destroy the window and exit python'''
 
         self._window.destroy()
         exit()
 
     def new_game(self):
         '''Start a new game'''
+
+        # Clear the board
         self._board.delete(ALL)
+        # Set the score to 0
         self._game.set_score(0)
         self._score.set(0)
+        # Redraw the board
         self.draw_board()
+        # Initialize the tile values list and spawn 2 tiles
         self._game.init_vals_list()
         self._game.spawn_tile(2)
+        # Draw the tiles
         self._game.draw_tiles()
 
     def get_board(self):
+        '''Accessor for the board frame'''
         return self._board
 
 
 if __name__ == '__main__':
+    # Initialize a Tkinter object and run the mainloop
     root = Tk()
     root.title('2048')
     app = GUI(root)
     root.mainloop()
-
