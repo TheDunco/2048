@@ -58,8 +58,11 @@ class GUI:
         self._board.update()
         if self._score.get() > self._high_score.get():
             self._high_score.set(self._score.get())
-            with open('high_score.txt', 'w') as hs:
-                hs.write(str(self._score.get()))
+            try:
+                with open('high_score.txt', 'w') as hs:
+                    hs.write(str(self._score.get()))
+            except PermissionError:
+                pass
 
     def draw_header(self):
 
@@ -126,8 +129,16 @@ class GUI:
             elif event.keysym == 'Left' or event.keysym == 'a':
                 self._game.move_tiles('left')
 
+            elif event.keysym == 'q':
+                self.game_over()
+
         except ValueError:
             pass
+
+    def game_over(self):
+        print('Game over')
+        # self._board.delete(ALL)
+        self._board.create_text((200, 150), text='Game Over!', font=('Roboto', 24))
 
     def set_score(self, score):
         self._score.set(score)

@@ -65,6 +65,11 @@ class Twenty48:
 
         # FIXME: Debug: This is still broken and only spawns on ~1st row and still overwrites tiles
         # FIXME: Is this the cause of random tiles disappearing?
+        # Test values
+        # self._vals = [2, 4, 8, 16,
+        #               32, 0, 2, 4,
+        #               64, 1024, 2, 2,
+        #               2048, 4, 4, 8]
         for i in range(number):
 
             # Choose whether the tile spawns as a 2 or 4 based on how many are spawning
@@ -78,6 +83,11 @@ class Twenty48:
             else:
                 value = 2
 
+            # self._vals = [2, 0, 0, 0,
+            #               0, 0, 0, 0,
+            #               0, 0, 0, 0,
+            #               0, 0, 0, 4]
+
             free_spaces = []
 
             for index in range(16):
@@ -85,14 +95,10 @@ class Twenty48:
                     # Create a list of the indices of free spaces
                     free_spaces.append(index)
 
-            rand_index = randint(0, len(free_spaces)-1)
-            if rand_index in free_spaces:
-                free_spaces.remove(rand_index)
+            amount_free_spaces = len(free_spaces)
+            rand_free_index = randint(0, amount_free_spaces-1)
+            rand_index = free_spaces[rand_free_index]
 
-
-            # print(self._vals)
-            # print('index:', rand_index)
-            # print('free spaces:', free_spaces)
             # Set the value of the random free index to a 2 or 4
             self._vals[rand_index] = value
 
@@ -127,6 +133,7 @@ class Twenty48:
 
         if self.game_over_check():
             print('Game 0ver!')
+            self._gui.game_over()
 
     def move_tiles(self, direction):
         if direction == 'up':
@@ -154,8 +161,8 @@ class Twenty48:
                 try:
                     if self._vals[index] == self._vals[index-4] or \
                             self._vals[index] == self._vals[index+4] or \
-                            self._vals[index] == self._valse[index+1] or \
-                            self._valse[index] == self._vals[index-1]:
+                            self._vals[index] == self._vals[index+1] or \
+                            self._vals[index] == self._vals[index-1]:
                             return False
 
                 except IndexError:
