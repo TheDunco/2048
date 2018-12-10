@@ -18,6 +18,7 @@ BOARD_LINE_COLOR = '#222222'
 HEADER_WIDTH = 400
 HEADER_HEIGHT = 200
 
+# FIXME: Implement help/how to play menu
 
 class GUI:
 
@@ -116,6 +117,8 @@ class GUI:
         self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
     def draw_help_screen(self):
+
+        # FIXME: Add help/how to play menu (Label underneath board)
         print('help')
         pass
 
