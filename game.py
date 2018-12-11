@@ -127,13 +127,13 @@ class Twenty48:
             # If there are 2 tiles spawning, the chances of a 4 are increased
             if number == 2:
 
-                # 2/5 chance of spawning a 4
+                # 1/5 chance of spawning a 4
                 rand_percent = randint(0, 5)
             else:
-                # 2/10 chance of spawning a 4
-                rand_percent = randint(0, 10)
+                # 1/8 chance of spawning a 4
+                rand_percent = randint(0, 8)
 
-            if rand_percent == 0 or rand_percent == 1:
+            if rand_percent == 5:
                 value = 4
             else:
                 value = 2
