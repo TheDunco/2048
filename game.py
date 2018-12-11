@@ -13,6 +13,10 @@ from coords import *
 # FIXME: If time/desire, add different color schemes
 
 class Twenty48:
+    '''
+    Main game mechanics for 2048 game
+    Handles movement, merging, colors, drawing tiles, and game states
+    '''
 
     def __init__(self, board, gui):
 
@@ -29,23 +33,60 @@ class Twenty48:
         # Make a coords object
         self._coords = Coords()
 
-        self._merged = False
+    def set_color_scheme(self, scheme):
+        '''Set the correct dictionary of colors according to the scheme'''
 
-        # Define a dictionary of the colors of the tiles
-        self._colors = {
-            2: '#FFE066',
-            4: '#FFFFFF',
-            8: '#757575',
-            16: '#FFCDD2',
-            32: '#03A9F4',
-            64: '#003366',
-            128: '#E91E63',
-            256: '#CDDC39',
-            512: '#E040FB',
-            1024: '#7C4DFF',
-            2048: '#D32F2F',
-            4096: '#111111'
-        }
+        if scheme == 'playful':
+            self._colors = {
+                2: '#FFE066',
+                4: '#FFFFFF',
+                8: '#757575',
+                16: '#FFCDD2',
+                32: '#03A9F4',
+                64: '#003366',
+                128: '#E91E63',
+                256: '#CDDC39',
+                512: '#E040FB',
+                1024: '#7C4DFF',
+                2048: '#D32F2F',
+                4096: '#303030',
+                8192: '#00FF33'
+            }
+
+        if scheme == 'red':
+            '''Color scheme from https://www.december.com/html/spec/color1.html'''
+            self._colors = {
+                2: '#CDC9C9',
+                4: '#8B8989',
+                8: '#8B6969',
+                16: '#BC8F8F',
+                32: '#C67171',
+                64: '#CD5555',
+                128: '#8E2323',
+                256: '#800000',
+                512: '#CC3232',
+                1024: '#660000',
+                2048: '#FF0000',
+                4096: '#330000',
+                8192: '#FFFAFA'
+            }
+
+        if scheme == 'blue':
+            self._colors = {
+                2: '#E0EEEE',
+                4: '#668B8B',
+                8: '#5F9F9F',
+                16: '#79CDCD',
+                32: '#37FDFC',
+                64: '#00688B',
+                128: '#0099CC',
+                256: '#50A6C2',
+                512: '#1874CD',
+                1024: '#003F87	',
+                2048: '#0000FF',
+                4096: '#162252',
+                8192: '#380474'
+            }
 
     def init_vals_list(self):
         '''Initialize the values of all of the spaces to be 0'''
@@ -54,8 +95,17 @@ class Twenty48:
                       0, 0, 0, 0,
                       0, 0, 0, 0]
 
+        # # Color scheme testing
+        # self._vals = [2, 4, 8, 16,
+        #               32, 64, 128, 256,
+        #               1024, 2048, 4096, 8192,
+        #               0, 0, 0, 0]
+
     def draw_tiles(self):
         '''Draw the tiles on the gui'''
+
+        if 2048 in self._vals:
+            self._gui.game_win()
 
         # For each index in the list of tile values
         for index in range(len(self._vals)):

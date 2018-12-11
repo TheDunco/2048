@@ -22,6 +22,7 @@ HEADER_HEIGHT = 200
 # FIXME: Add color schemes
 # FIXME: Merging issues
 
+
 class GUI:
     '''
     GUI Class for 2048 game.
@@ -58,6 +59,9 @@ class GUI:
 
         # Create a game object and pass it the instance of the GUI object
         self._game = Twenty48(self._board, self)
+
+        # Set the color scheme of the game
+        self._game.set_color_scheme('red')
 
         # Start a new game
         self.new_game()
@@ -115,14 +119,14 @@ class GUI:
         high_score_label.grid(column=2, row=1)
 
         # Create the high score display variable
-        high_score_var = Label(self._header, textvar=str(self._high_score), font=('Roboto', 16 ), bg='#FFFFFF')
+        high_score_var = Label(self._header, textvar=str(self._high_score), font=('Roboto', 16), bg='#FFFFFF')
         high_score_var.grid(column=3, row=1)
 
     def draw_board(self):
         '''Draw the play board'''
 
         # Grid (pack) the board initialized in the constructor
-        self._board.grid(row=1, column=0)
+        self._board.grid(row=2, column=0)
 
         # FIXME: Put in for loops
         # Create vertical board lines
@@ -139,6 +143,11 @@ class GUI:
         self._board.create_line(0, 200, BOARD_WIDTH, 200, fill=BOARD_LINE_COLOR)
         self._board.create_line(0, 300, BOARD_WIDTH, 300, fill=BOARD_LINE_COLOR)
 
+    def game_win(self):
+        '''Draw the winner label'''
+        win = Label(self._window, text='Congratulations! You win!', bg="#FFFFFF", font=('Roboto', 24, 'bold'))
+        win.grid(row=1, column=0)
+
     def draw_help_screen(self):
         '''Draw the "how to play" tip'''
 
@@ -146,7 +155,12 @@ class GUI:
         help_label = Label(self._window,
                            text='Use arrow keys or WASD to move tiles.\nLike tiles merge. Get 2048 tile to win.',
                            font=('Roboto', 16))
-        help_label.grid(row=2, column=0, columnspan=1)
+        help_label.grid(row=3, column=0, columnspan=1)
+
+        help_label2 = Label(self._window,
+                           text='"Q": End game | "P": Reset high score\n"T": Playful scheme | "Y": Red scheme\n"U": Blue scheme',
+                           font=('Roboto', 16))
+        help_label2.grid(row=4, column=0, columnspan=1)
 
     def key_event_handler(self, event):
         '''Handle the keyboard events of arrow keys and WASD'''
@@ -168,6 +182,8 @@ class GUI:
             # Quit keybinding
             elif event.keysym == 'q':
                 self.game_over()
+                self._board.update()
+                self.safe_exit()
 
             # Help screen keybinding
             elif event.keysym == 'h':
@@ -179,6 +195,17 @@ class GUI:
                 with open('high_score.txt', 'w') as file:
                     file.write('0')
                 self.safe_exit()
+
+            # Keybinding for setting color scheme to playful
+            elif event.keysym == 't':
+                self._game.set_color_scheme('playful')
+
+            # Keybinding for for setting color scheme to warm
+            elif event.keysym == 'y':
+                self._game.set_color_scheme('red')
+
+            elif event.keysym == 'u':
+                self._game.set_color_scheme('blue')
 
         except ValueError:
             pass
@@ -205,14 +232,18 @@ class GUI:
 
         # Clear the board
         self._board.delete(ALL)
+
         # Set the score to 0
         self._game.set_score(0)
         self._score.set(0)
+
         # Redraw the board
         self.draw_board()
+
         # Initialize the tile values list and spawn 2 tiles
         self._game.init_vals_list()
         self._game.spawn_tile(2)
+
         # Draw the tiles
         self._game.draw_tiles()
 
