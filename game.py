@@ -8,9 +8,6 @@ from random import randint
 from GUI import *
 from coords import *
 
-# FIXME: Add high score, game over functionality
-# FIXME: If time/desire, fix it so it only merges once per move.
-# FIXME: If time/desire, add different color schemes
 
 class Twenty48:
     '''
