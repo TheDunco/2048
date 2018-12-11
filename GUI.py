@@ -58,7 +58,7 @@ class GUI:
         self.draw_header()
 
         # Create a game object and pass it the instance of the GUI object
-        self._game = Twenty48(self._board, self)
+        self._game = Twenty48(self)
 
         # Set the color scheme of the game
         self._game.set_color_scheme('red')

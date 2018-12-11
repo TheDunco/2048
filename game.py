@@ -15,7 +15,7 @@ class Twenty48:
     Handles movement, merging, colors, drawing tiles, and game states
     '''
 
-    def __init__(self, board, gui):
+    def __init__(self, gui):
 
         # Create a list of the tile values
         self._vals = []
@@ -24,7 +24,6 @@ class Twenty48:
         self._score = 0
 
         # Initialize the instance variables of the board and GUI from the GUI class
-        self._board = board
         self._gui = gui
 
         # Make a coords object
@@ -114,9 +113,9 @@ class Twenty48:
                 space = self._coords.get_space(index)
 
                 # Create the the tile
-                self._board.create_rectangle(space['x1'], space['y1'], space['x2'], space['y2'], fill=color)
+                self._gui.get_board().create_rectangle(space['x1'], space['y1'], space['x2'], space['y2'], fill=color)
                 # Create the text for the value of the tile
-                self._board.create_text((space['cx'], space['cy']), text=str(value), font=('Roboto', 12))
+                self._gui.get_board().create_text((space['cx'], space['cy']), text=str(value), font=('Roboto', 12))
 
     def spawn_tile(self, number=1):
         '''Spawns tiles with values 2 or 4'''
