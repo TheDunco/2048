@@ -163,7 +163,8 @@ class GUI:
         help_label2.grid(row=4, column=0, columnspan=1)
 
     def key_event_handler(self, event):
-        '''Handle the keyboard events of arrow keys and WASD'''
+        '''Handle the keyboard events of arrow keys and WASD
+        Based off of code from @author: smn4, kvlinden, ds33 from "circle_solution.py'''
 
         try:
             # Movement key bindings...

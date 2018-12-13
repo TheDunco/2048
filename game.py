@@ -29,6 +29,8 @@ class Twenty48:
         # Make a coords object
         self._coords = Coords()
 
+        self._colors = {}
+
     def set_color_scheme(self, scheme):
         '''Set the correct dictionary of colors according to the scheme'''
 
@@ -50,7 +52,7 @@ class Twenty48:
             }
 
         if scheme == 'red':
-            '''Color scheme from https://www.december.com/html/spec/color1.html'''
+            '''Color scheme made from https://www.december.com/html/spec/color1.html'''
             self._colors = {
                 2: '#CDC9C9',
                 4: '#8B8989',
@@ -68,6 +70,7 @@ class Twenty48:
             }
 
         if scheme == 'blue':
+            '''Color scheme made from https://www.december.com/html/spec/color1.html'''
             self._colors = {
                 2: '#E0EEEE',
                 4: '#AABBFF',
