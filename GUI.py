@@ -100,27 +100,29 @@ class GUI:
         title = Label(self._header, text='2048', font=('Roboto', 36), bg='#FFFFFF')
         title.grid(row=0, column=0, sticky=NW)
 
-        # Create the new game button for the header
+        # Create the new game button that calls the new game method when clicked
         new_game = Button(self._header, text='New Game', font=('Roboto', 16), bg='#FFFFFF', command=self.new_game)
         new_game.grid(row=1, column=0, sticky=NW)
 
-        spacer = Label(self._header, text='                             ', bg='#FFFFFF').grid(row=0, column=1)
+        # Create the help button that displays the under-board help tip when clicked
+        help_button = Button(self._header, text="Help", font=('Roboto', 16), bg='#FFFFFF', command=self.draw_help_screen)
+        help_button.grid(row=0, column=1, padx=5, sticky=N+S, rowspan=2)
 
         # Create the score display label
-        score_label = Label(self._header, text='Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
-        score_label.grid(column=2, row=0, sticky=W)
+        score_label = Label(self._header, text='Score: ', font=('Roboto', 16), bg='#FFFFFF')
+        score_label.grid(column=3, row=0, sticky=W)
 
         # Create the score display variable
-        score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16 ), bg='#FFFFFF')
-        score_var.grid(column=3, row=0)
+        score_var = Label(self._header, textvar=str(self._score), font=('Roboto', 16), bg='#FFFFFF')
+        score_var.grid(column=4, row=0)
 
         # Create the high score display label
-        high_score_label = Label(self._header, text='High Score: ', font=('Roboto', 16 ), bg='#FFFFFF')
-        high_score_label.grid(column=2, row=1)
+        high_score_label = Label(self._header, text='High Score: ', font=('Roboto', 16), bg='#FFFFFF')
+        high_score_label.grid(column=3, row=1)
 
         # Create the high score display variable
         high_score_var = Label(self._header, textvar=str(self._high_score), font=('Roboto', 16), bg='#FFFFFF')
-        high_score_var.grid(column=3, row=1)
+        high_score_var.grid(column=4, row=1)
 
     def draw_board(self):
         '''Draw the play board'''
@@ -145,12 +147,12 @@ class GUI:
 
     def game_win(self):
         '''Draw the winner label'''
+
         win = Label(self._window, text='Congratulations! You win!', bg="#FFFFFF", font=('Roboto', 24, 'bold'))
         win.grid(row=1, column=0)
 
     def draw_help_screen(self):
         '''Draw the "how to play" tip'''
-
         # Create the instructional help label below the board
         help_label = Label(self._window,
                            text='Use arrow keys or WASD to move tiles.\nLike tiles merge. Get 2048 tile to win.',
@@ -220,6 +222,7 @@ class GUI:
 
     def set_score(self, score):
         '''Mutator for the score wrapper variable'''
+
         self._score.set(score)
 
     def safe_exit(self):
@@ -250,6 +253,7 @@ class GUI:
 
     def get_board(self):
         '''Accessor for the board frame'''
+
         return self._board
 
 

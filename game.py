@@ -13,9 +13,13 @@ class Twenty48:
     '''
     Main game mechanics for 2048 game
     Handles movement, merging, colors, drawing tiles, and game states
+
+    Receives a GUI object because to animate the tiles, I had to be
+    able to call the GUI's .refresh() method from the move method in this class.
     '''
 
     def __init__(self, gui):
+        '''Constructor for the 2048 class'''
 
         # Create a list of the tile values
         self._vals = []
@@ -29,6 +33,7 @@ class Twenty48:
         # Make a coords object
         self._coords = Coords()
 
+        # Initialize the colors dictionary
         self._colors = {}
 
     def set_color_scheme(self, scheme):
@@ -53,6 +58,7 @@ class Twenty48:
 
         if scheme == 'red':
             '''Color scheme made from https://www.december.com/html/spec/color1.html'''
+
             self._colors = {
                 2: '#CDC9C9',
                 4: '#8B8989',
@@ -71,6 +77,7 @@ class Twenty48:
 
         if scheme == 'blue':
             '''Color scheme made from https://www.december.com/html/spec/color1.html'''
+
             self._colors = {
                 2: '#E0EEEE',
                 4: '#AABBFF',
@@ -89,6 +96,7 @@ class Twenty48:
 
     def init_vals_list(self):
         '''Initialize the values of all of the spaces to be 0'''
+
         self._vals = [0, 0, 0, 0,
                       0, 0, 0, 0,
                       0, 0, 0, 0,
