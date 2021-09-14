@@ -13,6 +13,6 @@ but it made coding it easier and it made it look better.
 You can continue playing if you get the 2048 tile,
 but it tends to slow down if played for a significant amount of time. 
 
-You can contact me if you ned to at *djv78@students.calvin.edu*
+You can contact me if you need to at *duncvan@gmail.com*
 
 Hope you enjoy!
